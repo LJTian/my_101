@@ -1,10 +1,11 @@
-### Summary
+# 减少镜像大小
+### Summary(概要)
 
-- Use smaller base images
-- Multi-Stage Build
-- Clean all unused packages / files when create the new layer
+- Use smaller base images (使用更小的基础镜像)
+- Multi-Stage Build (多阶段编译)
+- Clean all unused packages / files when create the new layer(当创建新层时，清空未使用的包及文件)
 
-### Use smaller base images
+### Use smaller base images(使用更小的基础镜像)
 
 ```shell
 REPOSITORY                 TAG         IMAGE ID      CREATED       SIZE
@@ -13,11 +14,13 @@ docker.io/library/busybox  latest      42b97d3c2ae9  13 days ago   1.46 MB
 gcr.io/distroless/static   latest      e0851a4aa136  51 years ago  3.06 MB
 ```
 
+***以下这三个镜像特别小***
+
 - busybox
 - alpine
 - google/distroless
 
-Example:
+Example(例子):
 
 ```dockerfile
 FROM alpine:3.8
@@ -32,7 +35,7 @@ RUN apk add --no-cache \
 ....
 ```
 
-### Multi-Stage Build
+### Multi-Stage Build (多阶段编译)
 
 ```dockerfile
 FROM golang:1.10-alpine3.8 AS multistage
@@ -54,7 +57,7 @@ EXPOSE 3000
 CMD ["/go/bin/api"]
 ```
 
-### Clean all unused packages / files when create the new layer
+### Clean all unused packages / files when create the new layer (当创建新层时，清空未使用的包及文件)
 
 ```dockerfile
 ADD https://example.com/big.tar.xz /usr/src/things/

@@ -1,4 +1,5 @@
-### Create test lab
+### Create test lab (创建 测试 标签 )
+
 
 ```shell
 $ mkdir testlab && cd $_
@@ -11,7 +12,7 @@ $ echo "from lower" > lower/in_both.txt
 $ echo "from upper" > upper/in_both.txt
 ```
 
-### Check it
+### Check it(检查目录情况)
 
 ```log
 root@k8s-master:~/testlab# tree .
@@ -28,13 +29,16 @@ root@k8s-master:~/testlab# tree .
 4 directories, 4 files
 ```
 
-### Combine
+### Combine (合并目录)
 
+使用mount 挂载 新文件目录
 ```shell
 $ sudo mount -t overlay overlay -o lowerdir=`pwd`/lower,upperdir=`pwd`/upper,workdir=`pwd`/work `pwd`/merged
 ```
 
-### Check the merged file
+### Check the merged file(检查合并的文件)
+
+看一下谁被覆盖了
 
 ```shell
 $ cat merged/in_both.txt
@@ -44,13 +48,14 @@ $ cat merged/in_lower.txt
 $ cat merged/in_upper.txt
 ```
 
+查一下新文件目录大小
 ```shell
 $ df -h | grep testlab
 
 overlay                             29G  9.7G   18G  36% /root/testlab/merged
 ```
 
-### Delete merged file
+### Delete merged file(删除文件)
 
 ```shell
 $ delete merged/in_both.txt
